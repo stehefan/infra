@@ -32,3 +32,14 @@ provider "aws" {
   }
 }
 
+provider aws {
+  region = "us-east-1"
+  profile = "user"
+  alias = "us-east-1"
+
+  // role for subsequent use
+  assume_role {
+    role_arn = "arn:aws:iam::${local.account_id}:role/deploy"
+  }
+}
+

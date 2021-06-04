@@ -26,8 +26,10 @@ data "aws_iam_policy_document" "policy_doc_deploy" {
     effect = "Allow"
     actions = [
       "s3:*",
+      "acm:*",
       "route53:*",
       "route53domains:*",
+      "cloudfront:*",
       "iam:*",
       "dynamodb:*"
     ]
