@@ -27,6 +27,7 @@ data "aws_iam_policy_document" "policy_doc_deploy" {
     actions = [
       "s3:*",
       "route53:*",
+      "route53domains:*",
       "iam:*",
       "dynamodb:*"
     ]
