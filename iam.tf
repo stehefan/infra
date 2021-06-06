@@ -53,10 +53,10 @@ resource "aws_iam_access_key" "user_github_access_key" {
 resource "aws_iam_user_policy" "policy_github_s3_deploy" {
   name = "s3-deploy-to-home-policy"
   user = aws_iam_user.user_github.name
-  policy = data.aws_iam_policy_document.policy_doc_github_s3_deploy.json
+  policy = data.aws_iam_policy_document.policy_doc_github_deploy.json
 }
 
-data "aws_iam_policy_document" "policy_doc_github_s3_deploy" {
+data "aws_iam_policy_document" "policy_doc_github_deploy" {
   statement {
     actions = [
       "s3:*"
@@ -65,6 +65,15 @@ data "aws_iam_policy_document" "policy_doc_github_s3_deploy" {
     resources = [
       aws_s3_bucket.website_bucket.arn,
       "${aws_s3_bucket.website_bucket.arn}/*"
+    ]
+  }
+  statement {
+    actions = [
+      "cloudfront:*"
+    ]
+    effect = "Allow"
+    resources = [
+      "*"
     ]
   }
 }
