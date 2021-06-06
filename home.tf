@@ -124,9 +124,9 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     target_origin_id = local.s3_origin_id
     compress = true
     viewer_protocol_policy = "redirect-to-https"
-    min_ttl = 0
-    default_ttl = 3600
-    max_ttl = 86400
+    min_ttl = 3600
+    default_ttl = 86400
+    max_ttl = 604800
 
     forwarded_values {
       query_string = false
@@ -138,7 +138,7 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   }
 
   ordered_cache_behavior {
-    path_pattern = "public/*"
+    path_pattern = "*.htm*"
 
     allowed_methods = [
       "GET",
@@ -150,9 +150,9 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     target_origin_id = local.s3_origin_id
     compress = true
     viewer_protocol_policy = "redirect-to-https"
-    min_ttl = 3600
-    default_ttl = 3600
-    max_ttl = 86400
+    min_ttl = 0
+    default_ttl = 60
+    max_ttl = 60
 
     forwarded_values {
       query_string = false
@@ -172,5 +172,10 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
   viewer_certificate {
     acm_certificate_arn = aws_acm_certificate.website_certificate.arn
     ssl_support_method = "sni-only"
+  }
+
+  tags = {
+    Target = "S3"
+    Name = "HomeDistribution"
   }
 }
