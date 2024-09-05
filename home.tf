@@ -47,6 +47,10 @@ resource "aws_route53_record" "validation_records" {
 
 resource "aws_s3_bucket" "website_bucket" {
   bucket = "${local.account_id}-home-website"
+}
+
+resource "aws_s3_bucket_acl" "website_bucket_acl" {
+  bucket = aws_s3_bucket.website_bucket.bucket
   acl = "private"
 }
 

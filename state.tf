@@ -1,19 +1,28 @@
 resource "aws_s3_bucket" "bucket_tf_state" {
   bucket = "${local.account_id}-tf-state"
+}
+
+resource "aws_s3_bucket_acl" "bucket_tf_state_acl" {
+  bucket = aws_s3_bucket.bucket_tf_state.bucket
   acl = "private"
+}
 
-  versioning {
-    enabled = true
+resource "aws_s3_bucket_versioning" "bucket_tf_state_versioning" {
+  bucket = aws_s3_bucket.bucket_tf_state.bucket
+
+  versioning_configuration {
+    status = "Enabled"
   }
+}
 
-  server_side_encryption_configuration {
+resource "aws_s3_bucket_server_side_encryption_configuration" "bucket_tf_state_encryption" {
+  bucket = aws_s3_bucket.bucket_tf_state.bucket
 
-    rule {
-      bucket_key_enabled = true
+  rule {
+    bucket_key_enabled = true
 
-      apply_server_side_encryption_by_default {
-        sse_algorithm     = "aws:kms"
-      }
+    apply_server_side_encryption_by_default {
+      sse_algorithm = "aws:kms"
     }
   }
 }
