@@ -132,6 +132,11 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     default_ttl = 86400
     max_ttl = 604800
 
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.redirect.arn
+    }
+
     forwarded_values {
       query_string = false
 
@@ -150,7 +155,8 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
       "OPTIONS"]
     cached_methods = [
       "GET",
-      "HEAD"]
+      "HEAD"
+    ]
     target_origin_id = local.s3_origin_id
     compress = true
     viewer_protocol_policy = "redirect-to-https"
@@ -182,4 +188,12 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     Target = "S3"
     Name = "HomeDistribution"
   }
+}
+
+resource "aws_cloudfront_function" "redirect" {
+  name    = "redirect-stehefan-to-stefanlier"
+  runtime = "cloudfront-js-2.0"
+  comment = "Redirects stehefan.de to stefanlier.de"
+  publish = true
+  code    = file("${path.module}/functions/redirect.js")
 }
