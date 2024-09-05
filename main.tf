@@ -16,7 +16,7 @@ terraform {
     region = "eu-central-1"
     key = "terraform.tfstate"
     encrypt = true
-    profile = "user"
+    profile = "stehefan"
     role_arn = "arn:aws:iam::314522435747:role/deploy"
   }
 
@@ -24,7 +24,7 @@ terraform {
 
 provider "aws" {
   region = local.region
-  profile = "user"
+  profile = "stehefan"
 
   // role for subsequent use
   assume_role {
@@ -34,7 +34,7 @@ provider "aws" {
 
 provider aws {
   region = "us-east-1"
-  profile = "user"
+  profile = "stehefan"
   alias = "us-east-1"
 
   // role for subsequent use
