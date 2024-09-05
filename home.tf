@@ -164,6 +164,11 @@ resource "aws_cloudfront_distribution" "s3_distribution" {
     default_ttl = 60
     max_ttl = 60
 
+    function_association {
+      event_type   = "viewer-request"
+      function_arn = aws_cloudfront_function.redirect.arn
+    }
+
     forwarded_values {
       query_string = false
 
