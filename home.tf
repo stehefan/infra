@@ -43,8 +43,7 @@ resource "aws_route53_record" "validation_records" {
       name    = dvo.resource_record_name
       record  = dvo.resource_record_value
       type    = dvo.resource_record_type
-      zone_id = dvo.domain_name == "stehefan.de" ? aws_route53_zone.website_zones["stehefan.de"].zone_id :
-        aws_route53_zone.website_zones["stefanlier.de"].zone_id
+      zone_id = aws_route53_zone.website_zones[trimprefix(dvo.domain_name, "*.")].zone_id
     }
   }
 
