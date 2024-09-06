@@ -6,4 +6,6 @@ locals {
     "stehefan.de",
     "stefanlier.de"
   ]
+  main_url = "stefanlier.de"
+  vercel_cname = "cname.vercel-dns.com."
 }
